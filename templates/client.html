@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="Redast : REmote DAta STreaming" name="description">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <title>{{ Title }}</title>
+
+    <!-- Loading CSS -->
+    {% include 'partials/css.html' %}
+    <style>
+        #container {
+            margin: 0px auto;
+            border: 5px #333 solid;
+        }
+
+        #videoElement {
+            width: 640px;
+            height: 480px;
+            background-color: #666;
+        }
+
+        #canvasElement {
+            width: 640px;
+            height: 480px;
+            display: none;
+        }
+    </style>
+
+    <!-- Loading JS -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/lib/jquery-3.3.1.slim.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/lib/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script type="module" src="{{ url_for('static', filename='js/client.js') }}"></script>
+</head>
+<body>
+
+<div id="clientTabs" role="tablist" aria-multiselectable="true">
+
+    <div class="card">
+        <div class="card-header" role="tab" id="videoToggle">
+            <button id="videoToggleButton" class="btn btn-secondary btn-lg" type="button" data-toggle="collapse"
+                    data-parent="#clientTabs" data-target="#videoTab"
+                    aria-expanded="false" aria-controls="videoTab">
+                Toggle Video streaming
+            </button>
+        </div>
+        <div id="videoTab" class="collapse" role="tabcard" aria-labelledby="videoToggle">
+            <div id="container" class="card-body">
+                <button class="btn btn-secondary" id="flipCamera">Switch to front</button>
+                <div>Make sure to authorize the access to your camera</div>
+                <video id="videoElement" muted autoplay playsinline></video>
+                <canvas id="canvasElement"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" role="tab" id="imuToggle">
+            <button id="imuToggleButton" class="btn btn-secondary btn-lg" type="button" data-toggle="collapse"
+                    data-parent="#clientTabs" data-target="#imuTab"
+                    aria-expanded="false" aria-controls="imuTab">
+                Toggle IMU streaming
+            </button>
+        </div>
+        <div id="imuTab" class="collapse" role="tabcard" aria-labelledby="imuToggle">
+            <div class="card-body container">
+                <div class="row do">
+                    <label class="col-3">Orientation</label>
+                    <input class="col-2" id="do_alpha" type="text" placeholder="Yaw" disabled/>
+                    <input class="col-2" id="do_beta" type="text" placeholder="Pitch" disabled/>
+                    <input class="col-2" id="do_gamma" type="text" placeholder="Roll" disabled/>
+                    <input class="col-3" id="do_abs" type="text" placeholder="Absolute" disabled/>
+                </div>
+                <div class="row dm-rot">
+                    <label class="col-3">Rotation</label>
+                    <input class="col-3" id="dm_alpha" type="text" placeholder="R-Yaw" disabled/>
+                    <input class="col-3" id="dm_beta" type="text" placeholder="R-Pitch" disabled/>
+                    <input class="col-3" id="dm_gamma" type="text" placeholder="R-Roll" disabled/>
+                </div>
+                <div class="row dm-accel">
+                    <label class="col-3">Acceleration</label>
+                    <input class="col-3" id="dm_x" type="text" placeholder="X" disabled/>
+                    <input class="col-3" id="dm_y" type="text" placeholder="Y" disabled/>
+                    <input class="col-3" id="dm_z" type="text" placeholder="Z" disabled/>
+                </div>
+                <div class="row dm-gaccel">
+                    <label class="col-3">G + Acceleration</label>
+                    <input class="col-3" id="dm_gx" type="text" placeholder="GX" disabled/>
+                    <input class="col-3" id="dm_gy" type="text" placeholder="GY" disabled/>
+                    <input class="col-3" id="dm_gz" type="text" placeholder="GZ" disabled/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Copyright -->
+<div id="copyright">
+    &copy; REDAST, 2018-2018. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>, <a
+        href="https://ma-riviere.com">Marc-Aurèle Rivière</a>
+</div>
+</body>
+</html>
